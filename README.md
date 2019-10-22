@@ -3,6 +3,13 @@
 
 ![flowchart-editor](https://github.com/tuchongyang/flowchart-editor/blob/master/public/screeshot.png?raw=true)
 
+## Packages
+
+| Vue | ^2.6.10|
+| element-ui | ^2.12.0 |
+| @antv/g6 | ^3.1.3 |
+
+
 ## Usage
 ``` bash
 # git clone https://github.com/tuchongyang/flowchart-editor.git

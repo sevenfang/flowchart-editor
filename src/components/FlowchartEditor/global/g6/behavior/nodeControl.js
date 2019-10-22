@@ -291,6 +291,8 @@ export default {
               _t.graph.updateItem(_t.drawLine.currentLine, updateData)
               var line = _t.drawLine.currentLine.getModel();
               line.data.to = endModel.id;
+              // 记录操作日志
+              _t.graph.emit('editor:record', 'drawLine stop')
             }else{
               _t.graph.removeItem(_t.drawLine.currentLine);
             }
@@ -431,6 +433,8 @@ export default {
           }, group)
           // 更新节点
           _t.graph.updateItem(_t.info.node, attrs)
+          // 记录操作日志
+            _t.graph.emit('editor:record', 'shapecontrol stop')
         }
         if (_t.config.tooltip.shapeControl) {
           _t.toolTip.destroy.call(_t)
@@ -515,6 +519,8 @@ export default {
         if (_t.config.tooltip.shapeControl) {
           _t.toolTip.destroy.call(_t)
         }
+        // 记录操作日志
+            _t.graph.emit('editor:record', 'rotate stop')
         _t.shapeControlRotate.isMoving = false
         _t.info = null
       }
@@ -676,7 +682,10 @@ export default {
         let _t = this
         var startNodeModel = _t.info.node.getModel();
         delete startNodeModel.eventTarget;
+        // 记录操作日志
+            _t.graph.emit('editor:record', 'dragnode stop')
         _t.dragNode.clear.call(_t)
+
         if (_t.config.tooltip.dragNode) {
           _t.toolTip.destroy.call(_t)
         }

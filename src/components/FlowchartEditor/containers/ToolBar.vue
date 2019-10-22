@@ -285,12 +285,12 @@ export default {
             _t.$store.commit('editor/toolList/update', toolList)
         },
         handleToolClick(item, val) {
-            console.log(item)
+            // console.log(item)
             let _t = this
             if (item.disabled) {
                 return
             }
-            console.log('MaterialsEditor tool click', item.name, val)
+            // console.log('MaterialsEditor tool click', item.name, val)
             let payload = {
                 context: 'ToolBar',
                 name: item.name

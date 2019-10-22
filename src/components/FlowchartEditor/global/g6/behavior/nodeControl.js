@@ -277,21 +277,7 @@ export default {
             if(startModel.id == endModel.id){
               pass=false;
             }
-            /* 排他网关，入口只能有一个 */
-            if(['exclusiveGateway'].indexOf(endModel.shape)>-1){
-              var endNodeEdges = endNode.getEdges().map(item=>item.getModel())
-                if(endNodeEdges.some(item=>item.target.indexOf('exclusiveGateway')>-1)){
-                    ELEMENT.Message({type: 'error',message: '无法创建连接，【排他网关】节点已连接其他节点'});pass=false;
-                }
-            }
-            /* 除了结束节点，任务节点只能有一个出，多个入 */
-            if(['end'].indexOf(startModel.shape)<=-1 && ['exclusiveGateway'].indexOf(startModel.shape)<=-1){
-              var startNodeEdges = _t.info.node.getEdges().map(item=>item.getModel())
-              var startEdges = startNodeEdges.filter(item=>item.source==startModel.id)
-              if(startEdges &&startEdges.length>=2){
-                ELEMENT.Message({type: 'error',message: '无法创建连接，【'+startModel.label+'】节点已连接其他节点'});pass = false;
-              }
-            }
+            
             if(pass){
               let updateData = {
                 target: endModel.id,
@@ -607,13 +593,7 @@ export default {
             }
             
           }
-          /* start、end、apply三个节点只能有一个 */
-          if(!(['start','end','apply'].indexOf(node.shape)>-1 && nodes.some(item=>item.shape==node.shape))){
-            _t.graph.addItem('node', node)
-            
-          }else{
-            ELEMENT.Message.error('【'+node.label+'】节点已存在，请勿重复添加');
-          }
+          
           
           _t.dragNode.clear.call(_t)
           if (_t.config.tooltip.dragNode) {

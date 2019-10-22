@@ -78,7 +78,8 @@ export default {
     computed: {
         ...mapGetters([
             'currentItem',
-            'toolList'
+            'toolList',
+            'log'
         ])
     },
     beforeDestroy(){
@@ -196,7 +197,19 @@ export default {
             _t.editor.on('editor:contextmenu', function(data) {
                 utils.bus.$emit('editor/contextmenu/open', data)
             })
-            
+            _t.editor.on('editor:record', function (from) {
+                console.log('editor:record from', from)
+                // 更新操作日志
+                _t.$store.commit('editor/log/update', {
+                    action: 'record',
+                    data: {
+                        time: new Date(),
+                        content: _t.editor.save()
+                    }
+                })
+            })
+            //初始化时，记录当前状态
+            _t.editor.emit('editor:record', 'init')
             // 绑定热键
             // _t.bindShortcuts()
             // 绑定unload
@@ -409,7 +422,33 @@ export default {
         },
         handleToolTrigger(info) {
             let _t = this
+            // 是否记录日志标识
+            let isRecord = false
             switch (info.name) {
+                case 'undo':
+                case 'redo':
+                case 'clearLog':
+                    // 更新操作日志
+                    _t.$store.commit('editor/log/update', {
+                      action: info.name
+                    })
+                    if (['undo', 'redo'].includes(info.name)) {
+                      _t.$nextTick(function () {
+                        if (_t.log.list.length) {
+                          if (_t.log.current !== null) {
+                            let data = _t.log.list[_t.log.current]
+                            // 渲染
+                            _t.editor.read(data.content)
+                            _t.editor.paint()
+                          } else {
+                            // 清除
+                            _t.editor.clear()
+                            _t.editor.paint()
+                          }
+                        }
+                      })
+                    }
+                    break
                 case 'copy':
                     _t.doCopy()
                     break
@@ -443,6 +482,8 @@ export default {
                                     fill: info.data
                                 }
                             })
+                            isRecord = true
+                            console.log('sss',info.data)
                         }
                     })
                     break
@@ -457,6 +498,7 @@ export default {
                                     stroke: info.data
                                 }
                             })
+                            isRecord = true
                         }
                     })
                     _t.editor.getNodes().forEach(node => {
@@ -468,6 +510,7 @@ export default {
                                     stroke: info.data
                                 }
                             })
+                            isRecord = true
                         }
                     })
                     break
@@ -482,6 +525,7 @@ export default {
                                     lineWidth: info.data
                                 }
                             })
+                            isRecord = true
                         }
                     })
                     _t.editor.getNodes().forEach(node => {
@@ -493,6 +537,7 @@ export default {
                                     lineWidth: info.data
                                 }
                             })
+                            isRecord = true
                         }
                     })
                     break
@@ -508,6 +553,7 @@ export default {
                                     ...lineConfig.type[info.data]
                                 }
                             })
+                            isRecord = true
                         }
                     })
                     _t.editor.getNodes().forEach(node => {
@@ -519,6 +565,7 @@ export default {
                                     ...lineConfig.type[info.data]
                                 }
                             })
+                            isRecord = true
                         }
                     })
                     break
@@ -530,6 +577,7 @@ export default {
                                 shape: info.data
                             })
                             _t.editor.refreshItem(edge)
+                            isRecord = true
                         }
                     })
                     break
@@ -546,12 +594,17 @@ export default {
                                     [info.name]: info.data
                                 }
                             })
+                            isRecord = true
                         }
                     })
                     break
                 case 'clear':
                     _t.$confirm(i18n.t('flowchart.L10201'),i18n.t('flowchart.L10200'),{type:'warning'})
                     .then(resp=>{
+                        // 更新操作日志
+                        _t.$store.commit('editor/log/update', {
+                          action: 'clear'
+                        })
                         _t.editor.clear()
                         _t.editor.paint()
                     }).catch(()=>{})
@@ -568,6 +621,7 @@ export default {
                 case 'toFront':
                 case 'toBack':
                     if (info.data.hasOwnProperty('id') && info.data.id) {
+                        isRecord = true
                         let item = _t.editor.findById(info.data.id)
                         if (item && item[info.name]) {
                             // 执行操作
@@ -601,6 +655,10 @@ export default {
                         URL.revokeObjectURL(url)
                     }
                     break
+            }
+            if (isRecord) {
+              // 记录操作日志
+              _t.editor.emit('editor:record', 'handleToolTrigger')
             }
         },
         initInfo(data = {}) {

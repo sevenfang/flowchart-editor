@@ -5,9 +5,11 @@
 
 ## Packages
 
-| Vue | ^2.6.10|
-| element-ui | ^2.12.0 |
-| @antv/g6 | ^3.1.3 |
+插件 | 版本
+---- | ----- 
+Vue | ^2.6.10
+element-ui | ^2.12.0
+@antv/g6 | ^3.1.3
 
 
 ## Usage

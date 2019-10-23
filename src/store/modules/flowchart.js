@@ -1,3 +1,4 @@
+import config from '@/config';
 const flowchart = {
     state: {
         currentItem: {
@@ -14,26 +15,26 @@ const flowchart = {
         },
         // 工具列表
         toolList: [
-            // {
-            //   name: 'logo',
-            //   label: 'logo',
-            //   lang: 'flowchart.L10000',
-            //   type: 'text',
-            //   icon: '',
-            //   enable: true,
-            //   disabled: false,
-            //   mode: ['edit', 'preview'],
-            //   divider: false,
-            //   shortcuts: '',
-            //   toolbar: {
-            //     enable: true,
-            //     position: 'left'
-            //   },
-            //   contextmenu: {
-            //     enable: false,
-            //     target: []
-            //   }
-            // },
+            {
+              name: config.system.title,
+              label: 'logo',
+              lang: 'flowchart.L10000',
+              type: 'text',
+              icon: '',
+              enable: true,
+              disabled: false,
+              mode: ['edit', 'preview'],
+              divider: false,
+              shortcuts: '',
+              toolbar: {
+                enable: true,
+                position: 'left'
+              },
+              contextmenu: {
+                enable: false,
+                target: []
+              }
+            },
             {
                 name: 'undo',
                 label: 'Undo',

@@ -7,7 +7,7 @@
 export default {
     flowchart:{
         // 工具栏
-        L10000: 'XFC',
+        L10000: '流程编辑器',
         L10001: '撤消（Ctrl + Z）',
         L10002: '重做（Ctrl + Shift + Z）',
         L10003: '复制（Ctrl + C）',

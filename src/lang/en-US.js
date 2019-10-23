@@ -2,7 +2,7 @@
 
 export default {
   // toolbar
-  L10000: 'XFC',
+  L10000: 'Flowchart Editor',
   L10001: 'Undo (Ctrl + Z)',
   L10002: 'Redo (Ctrl + Shift + Z)',
   L10003: 'Copy (Ctrl + C)',

@@ -576,30 +576,7 @@ export default {
               ..._t.info.node.style
             }
           }
-          //将流程需要的数据绑定到data上，最终提交表单需要拿出来
-          node.data = {
-              "documentation": "",
-              "id": node.id,
-              "name": node.label,
-              "properties": null,
-              "type": node.shape,
-              "uname": "",
-              "user": ""
-          }
-          /*排他网关不需要label*/
-          if(['exclusiveGateway'].indexOf(node.shape)>-1){
-            node.label = ''
-          }
-          let nodes = _t.graph.getNodes().map(item=>item.getModel())
-          //start、end、apply三个节点的id唯一，apply节点的type为task
-          if(['start','end','apply'].indexOf(node.shape)>-1){
-            node.id=node.data.id = node.shape
-            if(node.shape=='apply'){
-              node.data.type="task"
-            }
-            
-          }
-          
+          _t.graph.addItem('node', node)      
           
           _t.dragNode.clear.call(_t)
           if (_t.config.tooltip.dragNode) {

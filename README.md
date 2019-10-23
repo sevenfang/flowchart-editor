@@ -11,6 +11,10 @@ Vue | ^2.6.10
 element-ui | ^2.12.0
 @antv/g6 | ^3.1.3
 
+## Document
+
+[G6文档](https://www.yuque.com/antv/g6/graph)
+[G6图标示例](http://antv.alipay.com/zh-cn/g6/3.x/demo/index.html)
 
 ## Usage
 ``` bash

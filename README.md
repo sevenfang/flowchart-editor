@@ -3,6 +3,10 @@
 
 ![flowchart-editor](https://github.com/tuchongyang/flowchart-editor/blob/master/public/screeshot.png?raw=true)
 
+## Preview
+[在线预览](https://tuchongyang.github.io/flowchart-editor/)
+
+
 ## Packages
 
 插件 | 版本
@@ -14,6 +18,7 @@ element-ui | ^2.12.0
 ## Document
 
 [G6文档](https://www.yuque.com/antv/g6/graph)
+
 [G6图标示例](http://antv.alipay.com/zh-cn/g6/3.x/demo/index.html)
 
 ## Usage
